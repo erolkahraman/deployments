@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nc-deployment
+  labels:
+    app: nc
+spec:
+  replicas: 2
+  strategy: 
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: nc
+  template:
+    metadata:
+      labels:
+        app: nc
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/g-node: g-node 
+        kubernetes.io/hostname: w-node2
+      containers:
+      - name: nc
+        ports: 
+          - containerPort: 11000
+          - hostPort: 11000
+        image: registry.sea.net:5000/nc:centos8_v1
+#        imagePullPolicy: Never
+        imagePullPolicy: IfNotPresent
+#      imagePullSecrets:
+#        - name: registrypullsecret
+#        - name: docker-registry
