@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: httpd-deployment
+  labels:
+    app: web
+spec:
+  replicas: 3
+  strategy: 
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/g-node: g-node
+      containers:
+      - name: web
+        image: registry.sea.net:5000/httpd:v1
+        ports:
+          - containerPort: 80
+        imagePullPolicy: IfNotPresent

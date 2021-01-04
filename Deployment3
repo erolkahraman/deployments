@@ -21,9 +21,9 @@ spec:
         kubernetes.io/hostname: w-node2
       containers:
       - name: nc
-        ports: 
-          - containerPort: 11000
-          - hostPort: 11000
+#        ports: 
+#          - containerPort: 11000
+#          - hostPort: 11000
         image: registry.sea.net:5000/nc:centos8_v1
 #        imagePullPolicy: Never
         imagePullPolicy: IfNotPresent

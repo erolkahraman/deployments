@@ -1,0 +1,15 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: httpd-service
+spec:
+  selector:
+    app: web
+#  type: ClusterIP
+  type: NodePort
+  ports:
+    - name: apache-port
+      port: 8080
+      targetPort: 80
+#  externalIPs:
+#    - 192.68.100.120
