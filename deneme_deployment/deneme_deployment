@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deneme-deployment
+  labels:
+    app: deneme
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: deneme
+  template:
+    metadata:
+      labels:
+        app: deneme
+    spec:
+      name: dddd
+      nodeSelector:
+        node-role.kubernetes.io/g-node: g-node
+      containers:
+      - name: deneme-container
+        image: registry.sea.net:5000/build_image_deneme:v2
+        imagePullPolicy: IfNotPresent
+

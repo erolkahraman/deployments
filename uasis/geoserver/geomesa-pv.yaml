@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: 172.16.0.244-geomesa-logs
+  labels:
+    uygulama: geomesa
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 172.16.0.244
+    path: "/data/nfs/kubernetes/pvs/geomesa-logs"
+
