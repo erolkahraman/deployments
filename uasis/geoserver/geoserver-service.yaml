@@ -7,6 +7,7 @@ metadata:
   name: geoserver
 spec:
   type: NodePort
+  clusterIP: 10.18.100.10
   ports:
     - name: geoserver-port
       port: 8000
