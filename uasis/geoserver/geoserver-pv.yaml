@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
+  namespace: uasis
   name: 172.16.0.244-geoserver-logs
   labels:
     uygulama: geoserver

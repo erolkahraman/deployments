@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: uasis
   name: geoserver-logs-claim
 spec:
   selector:

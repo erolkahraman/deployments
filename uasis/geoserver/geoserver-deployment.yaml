@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: uasis
   name: geoserver-deployment
   labels:
     uasis.app/name: geoserver
