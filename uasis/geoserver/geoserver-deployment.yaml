@@ -23,7 +23,6 @@ spec:
         image: registry.sea.net:5000/geoserver:v1
         ports:
         - containerPort: 8080
-        - hostPort: 8000
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - name: localtime
@@ -35,17 +34,12 @@ spec:
             mountPath: "/opt/geomesa/logs/"
       volumes:
       - name: localtime
-        hostPath: /etc/localtime
+        hostPath: 
+          path: /etc/localtime
+          type: file
       - name: geoserver-logs
         persistentVolumeClaim:
           claimName: geoserver-logs-claim
       - name: geomesa-logs
         persistentVolumeClaim:
           claimName: geomesa-logs-claim
-
-
-#    volumes:
-#      - /etc/localtime:/etc/localtime:ro
-#      - ./basarsoft-volumes/geoserver/geoserver_logs:/var/lib/geoserver/data_dir/logs
-#      - ./basarsoft-volumes/geoserver/geomesa_logs:/opt/geomesa/logs
-
