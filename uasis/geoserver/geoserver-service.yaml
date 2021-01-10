@@ -6,6 +6,7 @@ metadata:
     uasis.app/name: geoserver
   name: geoserver
 spec:
+  type: NodePort
   ports:
     - name: geoserver-port
       port: 8000
