@@ -28,6 +28,7 @@ spec:
         volumeMounts:
           - name: localtime
             mountPath: "/etc/localtime"
+            readOnly: true
           - name: geoserver-logs
             mountPath: "/var/lib/geoserver/data_dir/logs/"
           - name: geomesa-logs
@@ -35,11 +36,9 @@ spec:
       volumes:
       - name: localtime
         hostPath: /etc/localtime
-
       - name: geoserver-logs
         persistentVolumeClaim:
           claimName: geoserver-logs-claim
-
       - name: geomesa-logs
         persistentVolumeClaim:
           claimName: geomesa-logs-claim
