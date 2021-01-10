@@ -10,5 +10,6 @@ spec:
     - name: geoserver-port
       port: 8000
       targetPort: 8080
+      nodePort: 8000
   selector:
     uasis.app/name: geoserver
