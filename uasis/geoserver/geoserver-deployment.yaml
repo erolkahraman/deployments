@@ -3,18 +3,18 @@ kind: Deployment
 metadata:
   name: geoserver-deployment
   labels:
-    app: geoserver
+    uasis.app/name: geoserver
 spec:
   replicas: 1
   strategy:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: geoserver
+      uasis.app/name: geoserver
   template:
     metadata:
       labels:
-        app: geoserver
+        uasis.app/name: geoserver
     spec:
       nodeSelector:
         node-role.kubernetes.io/g-node: w-node
