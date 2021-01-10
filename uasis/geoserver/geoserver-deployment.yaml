@@ -17,7 +17,7 @@ spec:
         uasis.app/name: geoserver
     spec:
       nodeSelector:
-        node-role.kubernetes.io/g-node: worker
+        node-role.kubernetes.io/worker: worker
       containers:
       - name: geoserver
         image: registry.sea.net:5000/geoserver:v1
