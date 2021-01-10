@@ -14,3 +14,19 @@ spec:
     server: 172.16.0.244
     path: "/data/nfs/kubernetes/pvs/geomesa-logs"
 
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: uasis
+  name: geomesa-logs-claim
+spec:
+  selector:
+    matchLabels:
+      uygulama: geomesa
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 5Gi
