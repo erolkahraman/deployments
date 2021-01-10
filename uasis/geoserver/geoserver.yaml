@@ -1,0 +1,129 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: uasis
+  name: 172.16.0.244-geoserver-logs
+  labels:
+    uygulama: geoserver
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 172.16.0.244
+    path: "/data/nfs/kubernetes/pvs/geoserver-logs"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: uasis
+  name: geoserver-logs-claim
+spec:
+  selector:
+    matchLabels:
+      uygulama: geoserver
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: uasis
+  name: 172.16.0.244-geomesa-logs
+  labels:
+    uygulama: geomesa
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 172.16.0.244
+    path: "/data/nfs/kubernetes/pvs/geomesa-logs"
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: uasis
+  name: geomesa-logs-claim
+spec:
+  selector:
+    matchLabels:
+      uygulama: geomesa
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 5GiapiVersion: v1
+
+---
+kind: Service
+metadata:
+  namespace: uasis
+  labels:
+    uasis.app/name: geoserver
+  name: geoserver
+spec:
+  ports:
+    - name: geoserver-port
+      port: 8000
+      targetPort: 8080
+  selector:
+    uasis.app/name: geoserver
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: uasis
+  name: geoserver-deployment
+  labels:
+    uasis.app/name: geoserver
+spec:
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      uasis.app/name: geoserver
+  template:
+    metadata:
+      labels:
+        uasis.app/name: geoserver
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/worker: worker
+      containers:
+      - name: geoserver
+        image: registry.sea.net:5000/geoserver:v1
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: localtime
+            mountPath: "/etc/localtime"
+            readOnly: true
+          - name: geoserver-logs
+            mountPath: "/var/lib/geoserver/data_dir/logs/"
+          - name: geomesa-logs
+            mountPath: "/opt/geomesa/logs/"
+      volumes:
+      - name: localtime
+        hostPath: 
+          path: /etc/localtime
+          type: File
+      - name: geoserver-logs
+        persistentVolumeClaim:
+          claimName: geoserver-logs-claim
+      - name: geomesa-logs
+        persistentVolumeClaim:
+          claimName: geomesa-logs-claim
