@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: busybox-deployment
+  name: busybox
   labels:
     app: busybox
 spec:
@@ -16,11 +16,10 @@ spec:
       labels:
         app: busybox
     spec:
-      nodeSelector:
-        node-role.kubernetes.io/g-node: g-node 
+#      nodeSelector:
+#        node-role.kubernetes.io/g-node: g-node 
       containers:
       - name: busybox
         image: busybox
         imagePullPolicy: IfNotPresent
-        
         command: ['sh', '-c', 'echo Container 1 is Running ; sleep 30']
